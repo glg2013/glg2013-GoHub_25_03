@@ -1,12 +1,12 @@
 package verifycode
 
 type Store interface {
-	// Set 保存验证码
+	// 保存验证码
 	Set(id string, value string) bool
 
-	// Get 获取验证码
+	// 获取验证码
 	Get(id string, clear bool) string
 
-	// Verify 检查验证码
-	Verify(id string, answer bool, clear bool) bool
+	// 检查验证码
+	Verify(id, answer string, clear bool) bool
 }
