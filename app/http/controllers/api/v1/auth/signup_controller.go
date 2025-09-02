@@ -65,3 +65,13 @@ func (sc *SignupController) SignupUsingPhone(c *gin.Context) {
 		response.Abort500(c, "创建用户失败，请稍后尝试~")
 	}
 }
+
+func (sc *SignupController) SignupUsingEmail(c *gin.Context) {
+
+	// 1. 验证表单
+	request := requests.SignupUsingEmailRequest{}
+	if ok := requests.Validate(c, &request, requests.SignupUsingEmail); !ok {
+		return
+	}
+
+}
