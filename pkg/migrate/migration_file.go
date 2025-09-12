@@ -7,7 +7,7 @@ import (
 )
 
 // migrationFunc 定义 up 和 down 回调方法的类型
-type migrationFunc func(migrator gorm.Migrator, db *sql.DB)
+type migrationFunc func(gorm.Migrator, *sql.DB)
 
 // migrationFiles 所有的迁移文件数组
 var migrationFiles []MigrationFile
@@ -26,4 +26,24 @@ func Add(name string, up migrationFunc, down migrationFunc) {
 		Up:       up,
 		Down:     down,
 	})
+}
+
+// getMigrationFile 通过迁移文件的名称来获取到 MigrationFile 对象
+func getMigrationFile(name string) MigrationFile {
+	for _, mfile := range migrationFiles {
+		if name == mfile.FileName {
+			return mfile
+		}
+	}
+	return MigrationFile{}
+}
+
+// isNotMigrated 判断迁移是否已执行
+func (mfile MigrationFile) isNotMigrated(migrations []Migration) bool {
+	for _, migration := range migrations {
+		if migration.Migration == mfile.FileName {
+			return false
+		}
+	}
+	return true
 }
