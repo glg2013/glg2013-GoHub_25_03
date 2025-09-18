@@ -3,6 +3,7 @@ package database
 
 import (
 	"database/sql"
+	"errors"
 	"fmt"
 	"gohub/pkg/config"
 
