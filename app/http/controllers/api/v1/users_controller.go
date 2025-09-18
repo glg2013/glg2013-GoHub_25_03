@@ -2,6 +2,7 @@ package v1
 
 import (
 	"gohub/app/models/user"
+	"gohub/app/requests"
 	"gohub/pkg/auth"
 	"gohub/pkg/response"
 
@@ -24,6 +25,13 @@ func (ctrl *UsersController) Index(c *gin.Context) {
 	//data := user.All()
 	//response.Data(c, data)
 
+	// 使用 request 过滤
+	request := requests.PaginationRequest{}
+	if ok := requests.Validate(c, &request, requests.Pagination); !ok {
+		return
+	}
+
+	// 获取分页数据
 	data, pager := user.Paginate(c, 10)
 	response.JSON(c, gin.H{
 		"data":  data,
